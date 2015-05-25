@@ -24,6 +24,9 @@ This is a twitch.tv plugin for the [Hearthstone Deck Tracker](https://github.com
 #Other
 - Commands can currently be executed once every ten seconds.
 
+#Download:
+- Get the latest version here: https://github.com/Epix37/HDT-TwitchPlugin/releases
+
 #Contact
 If you have questions, suggestions or just want to talk feel free to email me!
 Email: epikz37@gmail.com
