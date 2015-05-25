@@ -194,3 +194,7 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+HDT-TwitchPlugin.sln.ide/edb.chk
+HDT-TwitchPlugin.sln.ide/edbres00001.jrs
+HDT-TwitchPlugin.sln.ide/edbres00002.jrs
+HDT-TwitchPlugin.sln.ide/storage.ide
