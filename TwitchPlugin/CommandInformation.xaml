@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="TwitchPlugin.CommandInformation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="300">
+    <ScrollViewer>
+        <StackPanel>
+            <GroupBox Header="GENERAL">
+                All commands linking decks require HDT to be synced with HearthStats.
+            </GroupBox>
+            <GroupBox Header="COMMANDS">
+                <StackPanel>
+                    <GroupBox Header="!deck">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run>Returns information about the currently active (selected) deck.</Run>
+                            <LineBreak />
+                            <Bold>Arena:</Bold>
+                            <Run>Current arena run ({class}): {win-loss}, DeckList: {url}[not yet implemented]</Run>
+                            <LineBreak />
+                            <Bold>Constructed:</Bold>
+                            <Run>Currently using "{deckname}", Winrate: {win%} ({win-loss}), Decklist: {url}</Run>
+                        </TextBlock>
+                    </GroupBox>
+                    <GroupBox Header="!alldecks">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run>Returns a list of all decks tagged with "TwitchPlugin":</Run>
+                            <LineBreak />
+                            <Run>{deckname1}: {url1}, {deckname2}: {url2}, ...</Run>
+                            <LineBreak />
+                            <Run>To add a deck to this list right-click a deck in HDT and add the "TwitchPlugin" tag via "QUICK SET TAG"</Run>
+                        </TextBlock>
+                    </GroupBox>
+                    <GroupBox Header="!hdt">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run>Returns a downloadlink to HDT.</Run>
+                        </TextBlock>
+                    </GroupBox>
+                    <GroupBox Header="!stats {timeframe}">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run>Returns information about your stats for the given timeframe:</Run>
+                            <LineBreak />
+                            <Run>Played {#games} games with {#used decks} decks. Total stats: {win-loss}</Run>
+                            <LineBreak />
+                            <Bold>timeframes:</Bold>
+                            <Run>today, week</Run>
+                        </TextBlock>
+                    </GroupBox>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="auto post game result">
+                <TextBlock TextWrapping="Wrap">
+                    <Run>Writes details about the last game, when entering the main menu after:</Run>
+                    <LineBreak />
+                    <Run>{result} VS {opponentname} ({opponent class}) after {x min}: {deck win-loss}</Run>
+                </TextBlock>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
