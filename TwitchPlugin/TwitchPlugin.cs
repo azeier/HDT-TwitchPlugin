@@ -67,7 +67,7 @@ namespace TwitchPlugin
 
 		public Version Version
 		{
-			get { return new Version(0, 2); }
+			get { return new Version(0, 2, 0, 0); }
 		}
 
 		public MenuItem MenuItem { get; private set; }
