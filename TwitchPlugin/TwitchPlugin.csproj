@@ -68,6 +68,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TwitchChatMessage.cs" />
     <Compile Include="TwitchPlugin.cs" />
+    <Compile Include="UpdateCheck.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="CommandInformation.xaml">

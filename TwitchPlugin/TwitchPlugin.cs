@@ -22,6 +22,7 @@ namespace TwitchPlugin
 				GenerateMenuItem();
 			GameEvents.OnGameEnd.Add(ChatCommands.OnGameEnd);
 			GameEvents.OnInMenu.Add(ChatCommands.OnInMenu);
+			UpdateCheck.Run(Version);
 		}
 
 		public void OnUnload()
