@@ -51,7 +51,7 @@ namespace TwitchPlugin
 			get
 			{
 				return
-					"Connects to Twitch IRC to post your decks, stats and more on command.\n\nIf you have questions, suggestions or just want to talk feel free to email me: epikz37@gmail.com.";
+					"Connects to Twitch IRC to post your decks, stats and more on command. For a detailed list of commands click the \"INFO\" button under settings.\n\nIf you have questions, suggestions or just want to talk feel free to email me: epikz37@gmail.com.";
 			}
 		}
 
@@ -67,7 +67,7 @@ namespace TwitchPlugin
 
 		public Version Version
 		{
-			get { return new Version(0, 1); }
+			get { return new Version(0, 2); }
 		}
 
 		public MenuItem MenuItem { get; private set; }
