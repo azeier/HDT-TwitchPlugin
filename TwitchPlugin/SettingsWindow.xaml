@@ -45,6 +45,12 @@
             <Button Content="Info" Click="Button_ClickInfo" Margin="5" DockPanel.Dock="Left" Width="100"/>
             <Button Content="save &amp; close" Click="Button_ClickSave" Margin="5"/>
         </DockPanel>
+        <GroupBox Header="OTHER" DockPanel.Dock="Bottom">
+            <DockPanel>
+                <TextBlock Text="Best deck min. games:" VerticalAlignment="Center"/>
+                <TextBox Margin="5,0,0,0" Text="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=BestDeckGamesThreshold}" PreviewTextInput="TexBoxMinGames_OnPreviewTextInput"/>
+            </DockPanel>
+        </GroupBox>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -58,6 +64,16 @@
                         <CheckBox Content="!hdt" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandHdt}"/>
                         <CheckBox Content="!stats today" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsToday}"/>
                         <CheckBox Content="!stats week" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsWeek}"/>
+                        <CheckBox Content="!stats season" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsSeason}"/>
+                        <CheckBox Content="!stats total" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsTotal}"/>
+                        <CheckBox Content="!arena today" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaToday}"/>
+                        <CheckBox Content="!arena week" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaWeek}"/>
+                        <CheckBox Content="!arena season" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaSeason}"/>
+                        <CheckBox Content="!arena total" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaTotal}"/>
+                        <CheckBox Content="!bestdeck today" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckToday}"/>
+                        <CheckBox Content="!bestdeck week" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckWeek}"/>
+                        <CheckBox Content="!bestdeck season" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckSeason}"/>
+                        <CheckBox Content="!bestdeck total" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckTotal}"/>
                     </ItemsControl>
                 </ScrollViewer>
             </GroupBox>

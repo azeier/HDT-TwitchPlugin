@@ -1,8 +1,6 @@
 ﻿#region
 
-using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker;
 
 #endregion
@@ -13,11 +11,6 @@ namespace TwitchPlugin
 	{
 		private static Config _instance;
 
-		public static Config Instance
-		{
-			get { return _instance ?? Load(); }
-		}
-
 		public Config()
 		{
 			AutoPostGameResult = true;
@@ -26,6 +19,22 @@ namespace TwitchPlugin
 			ChatCommandHdt = true;
 			ChatCommandStatsToday = true;
 			ChatCommandStatsWeek = true;
+			ChatCommandStatsSeason = true;
+			ChatCommandStatsTotal = true;
+			ChatCommandArenaToday = true;
+			ChatCommandArenaWeek = true;
+			ChatCommandArenaSeason = true;
+			ChatCommandArenaTotal = true;
+			ChatCommandBestDeckToday = true;
+			ChatCommandBestDeckWeek = true;
+			ChatCommandBestDeckSeason = true;
+			ChatCommandBestDeckTotal = true;
+			BestDeckGamesThreshold = 3;
+		}
+
+		public static Config Instance
+		{
+			get { return _instance ?? Load(); }
 		}
 
 		public string User { get; set; }
@@ -37,17 +46,29 @@ namespace TwitchPlugin
 		public bool ChatCommandHdt { get; set; }
 		public bool ChatCommandStatsToday { get; set; }
 		public bool ChatCommandStatsWeek { get; set; }
-
-		public static T GetConfigItem<T>(string name)
-		{
-			object prop = Instance.GetType().GetProperty(name).GetValue(Instance, null);
-			if(prop == null) { return default(T); }
-			return (T)prop;
-		}
+		public bool ChatCommandStatsSeason { get; set; }
+		public bool ChatCommandStatsTotal { get; set; }
+		public bool ChatCommandArenaToday { get; set; }
+		public bool ChatCommandArenaWeek { get; set; }
+		public bool ChatCommandArenaSeason { get; set; }
+		public bool ChatCommandArenaTotal { get; set; }
+		public bool ChatCommandBestDeckToday { get; set; }
+		public bool ChatCommandBestDeckWeek { get; set; }
+		public bool ChatCommandBestDeckSeason { get; set; }
+		public bool ChatCommandBestDeckTotal { get; set; }
+		public int BestDeckGamesThreshold { get; set; }
 
 		private static string FilePath
 		{
 			get { return Path.Combine(Hearthstone_Deck_Tracker.Config.Instance.ConfigDir, "TwitchPlugin.xml"); }
+		}
+
+		public static T GetConfigItem<T>(string name)
+		{
+			object prop = Instance.GetType().GetProperty(name).GetValue(Instance, null);
+			if(prop == null)
+				return default(T);
+			return (T)prop;
 		}
 
 		public static void Save()

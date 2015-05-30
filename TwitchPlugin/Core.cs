@@ -2,12 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using System.Linq;
 using Hearthstone_Deck_Tracker;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Stats;
 
 #endregion
 
@@ -16,15 +12,7 @@ namespace TwitchPlugin
 	public class Core
 	{
 		private static IRC _irc;
-
 		private static readonly Dictionary<string, ChatCommand> Commands;
-
-		public static string TwitchTag { get { return "TwitchPlugin"; } }
-
-		public static List<string> GetCommandNames()
-		{
-			return Commands.Select(x => x.Key).ToList();
-		}
 
 		static Core()
 		{
@@ -34,8 +22,27 @@ namespace TwitchPlugin
 			AddCommand("hdt", ChatCommands.HdtCommand, "ChatCommandHdt");
 			AddCommand("stats today", () => ChatCommands.StatsCommand("today"), "ChatCommandStatsToday");
 			AddCommand("stats week", () => ChatCommands.StatsCommand("week"), "ChatCommandStatsWeek");
+			AddCommand("stats season", () => ChatCommands.StatsCommand("season"), "ChatCommandStatsSeason");
+			AddCommand("stats total", () => ChatCommands.StatsCommand("total"), "ChatCommandStatsTotal");
+			AddCommand("arena today", () => ChatCommands.ArenaCommand("today"), "ChatCommandArenaToday");
+			AddCommand("arena week", () => ChatCommands.ArenaCommand("week"), "ChatCommandArenaWeek");
+			AddCommand("arena season", () => ChatCommands.ArenaCommand("season"), "ChatCommandArenaSeason");
+			AddCommand("arena total", () => ChatCommands.ArenaCommand("total"), "ChatCommandArenaTotal");
+			AddCommand("bestdeck today", () => ChatCommands.BestDeckCommand("today"), "ChatCommandBestDeckToday");
+			AddCommand("bestdeck week", () => ChatCommands.BestDeckCommand("week"), "ChatCommandBestDeckWeek");
+			AddCommand("bestdeck season", () => ChatCommands.BestDeckCommand("season"), "ChatCommandBestDeckSeason");
+			AddCommand("bestdeck total", () => ChatCommands.BestDeckCommand("total"), "ChatCommandBestDeckTotal");
 		}
 
+		public static string TwitchTag
+		{
+			get { return "TwitchPlugin"; }
+		}
+
+		public static List<string> GetCommandNames()
+		{
+			return Commands.Select(x => x.Key).ToList();
+		}
 
 		public static void AddCommand(string command, Action action, string propName)
 		{
@@ -68,14 +75,9 @@ namespace TwitchPlugin
 			var cmd = msg.Message.Substring(1);
 			ChatCommand chatCommand;
 			if(Commands.TryGetValue(cmd, out chatCommand))
-			{
 				chatCommand.Execute(msg);
-			}
 			else
-			{
 				Logger.WriteLine(string.Format("Unknown command by {0}: {1}", msg.User, msg.Message), "TwitchPlugin");
-			}
-			
 		}
 
 		public static void Disconnect()
@@ -91,10 +93,11 @@ namespace TwitchPlugin
 
 	public class ChatCommand
 	{
-		private readonly string _command;
 		private readonly Action _action;
+		private readonly string _command;
 		private readonly string _configItem;
 		private DateTime _lastExecute;
+
 		public ChatCommand(string command, Action action, string configItem)
 		{
 			_command = command;

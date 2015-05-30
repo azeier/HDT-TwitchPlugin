@@ -1,9 +1,8 @@
-﻿using System;
-using System.Net;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Newtonsoft.Json.Linq;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace TwitchPlugin
 {
@@ -11,11 +10,6 @@ namespace TwitchPlugin
 
 	public class TwitchChatMessage
 	{
-		public string User { get; private set; }
-		public string Channel { get; private set; }
-		public string Message { get; private set; }
-		public DateTime Time { get; private set; }
-
 		public TwitchChatMessage(string user, string channel, string message)
 		{
 			User = user;
@@ -23,6 +17,11 @@ namespace TwitchPlugin
 			Message = message;
 			Time = DateTime.Now;
 		}
+
+		public string User { get; private set; }
+		public string Channel { get; private set; }
+		public string Message { get; private set; }
+		public DateTime Time { get; private set; }
 
 		public override string ToString()
 		{

@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
-using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker;
 
 #endregion
@@ -19,8 +18,6 @@ namespace TwitchPlugin
 
 		public delegate void UserColor(string user, string color);
 
-		public bool Connected { get { return _connection.Connected; } }
-
 		private readonly string _name;
 		private readonly string _nick;
 		private readonly string _oauth;
@@ -34,6 +31,11 @@ namespace TwitchPlugin
 			_name = name;
 			_nick = nick;
 			_oauth = oauth;
+		}
+
+		public bool Connected
+		{
+			get { return _connection.Connected; }
 		}
 
 		public event ChatMsg OnChatMsg;
@@ -125,6 +127,7 @@ namespace TwitchPlugin
 				}
 			}
 		}
+
 		private void SendData(string cmd, string param = "")
 		{
 			string data = param == "" ? cmd : cmd + " " + param;

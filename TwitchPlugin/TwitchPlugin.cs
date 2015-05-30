@@ -1,10 +1,10 @@
 ﻿#region
 
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker;
+using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Plugins;
 
 #endregion
@@ -13,34 +13,21 @@ namespace TwitchPlugin
 {
 	public class TwitchPlugin : IPlugin
 	{
-		private MenuItem _menuItem;
 		private SettingsWindow _settingsWindow;
 
 		public void OnLoad()
 		{
 			Setup();
-			if(_menuItem == null)
+			if(MenuItem == null)
 				GenerateMenuItem();
-			Hearthstone_Deck_Tracker.API.GameEvents.OnGameEnd.Add(ChatCommands.OnGameEnd);
-			Hearthstone_Deck_Tracker.API.GameEvents.OnInMenu.Add(ChatCommands.OnInMenu);
-		}
-
-		private void Setup()
-		{
-			if(!DeckList.Instance.AllTags.Contains(Core.TwitchTag))
-			{
-				DeckList.Instance.AllTags.Add(Core.TwitchTag);
-				DeckList.Save();
-				Helper.MainWindow.ReloadTags();
-			}
+			GameEvents.OnGameEnd.Add(ChatCommands.OnGameEnd);
+			GameEvents.OnInMenu.Add(ChatCommands.OnInMenu);
 		}
 
 		public void OnUnload()
 		{
 			if(_settingsWindow != null)
-			{
 				_settingsWindow.Close();
-			}
 			Core.Disconnect();
 		}
 
@@ -60,7 +47,11 @@ namespace TwitchPlugin
 
 		public string Description
 		{
-			get { return "Connects to Twitch IRC to post your decks, stats and more on command.\n\nIf you have questions, suggestions or just want to talk feel free to email me: epikz37@gmail.com."; }
+			get
+			{
+				return
+					"Connects to Twitch IRC to post your decks, stats and more on command.\n\nIf you have questions, suggestions or just want to talk feel free to email me: epikz37@gmail.com.";
+			}
 		}
 
 		public string ButtonText
@@ -78,17 +69,24 @@ namespace TwitchPlugin
 			get { return new Version(0, 1); }
 		}
 
-		public MenuItem MenuItem
+		public MenuItem MenuItem { get; private set; }
+
+		private void Setup()
 		{
-			get { return _menuItem; }
+			if(!DeckList.Instance.AllTags.Contains(Core.TwitchTag))
+			{
+				DeckList.Instance.AllTags.Add(Core.TwitchTag);
+				DeckList.Save();
+				Helper.MainWindow.ReloadTags();
+			}
 		}
 
 		private void GenerateMenuItem()
 		{
-            _menuItem = new MenuItem { Header = "TWITCH" };
+			MenuItem = new MenuItem {Header = "TWITCH"};
 			var connectMenuItem = new MenuItem {Header = "CONNECT"};
 			var disconnectMenuItem = new MenuItem {Header = "DISCONNECT", Visibility = Visibility.Collapsed};
-			var settingsMenuItem = new MenuItem { Header = "SETTINGS" };
+			var settingsMenuItem = new MenuItem {Header = "SETTINGS"};
 
 			connectMenuItem.Click += (sender, args) =>
 			{
@@ -96,9 +94,7 @@ namespace TwitchPlugin
 				{
 					if(string.IsNullOrEmpty(Config.Instance.User) || string.IsNullOrEmpty(Config.Instance.Channel) ||
 					   string.IsNullOrEmpty(Config.Instance.OAuth))
-					{
 						OpenSettings();
-					}
 					else if(Core.Connect())
 					{
 						disconnectMenuItem.Header = string.Format("DISCONNECT ({0}: {1})", Config.Instance.User, Config.Instance.Channel);
@@ -119,9 +115,9 @@ namespace TwitchPlugin
 			};
 			settingsMenuItem.Click += (sender, args) => OpenSettings();
 
-			_menuItem.Items.Add(connectMenuItem);
-			_menuItem.Items.Add(disconnectMenuItem);
-			_menuItem.Items.Add(settingsMenuItem);
+			MenuItem.Items.Add(connectMenuItem);
+			MenuItem.Items.Add(disconnectMenuItem);
+			MenuItem.Items.Add(settingsMenuItem);
 		}
 
 		private void OpenSettings()
