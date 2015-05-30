@@ -1,7 +1,8 @@
 # HDT-TwitchPlugin
 This is a plugin for the [Hearthstone Deck Tracker](https://github.com/Epix37/Hearthstone-Deck-Tracker).  
 It logs into a twitch.tv account you provide and responds to chat commands in your channel (listed below).   
-![commands](http://i.imgur.com/8Jaslz8.png)
+![commands](http://i.imgur.com/8Jaslz8.png)  
+[List of all commands](https://github.com/Epix37/HDT-TwitchPlugin/wiki/Commands)
 
 #Requirements:
 - Latest version of HDT (v0.10.1)
