@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker;
 using MahApps.Metro.Controls.Dialogs;
+
+#endregion
 
 namespace TwitchPlugin
 {
@@ -21,7 +22,7 @@ namespace TwitchPlugin
 			{
 				Logger.WriteLine("Current version: " + current, "TwitchPlugin");
 				string xml;
-				using (var wc = new WebClient())
+				using(var wc = new WebClient())
 					xml = await wc.DownloadStringTaskAsync(versionXmlUrl);
 
 				var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
@@ -30,15 +31,16 @@ namespace TwitchPlugin
 				if(newVersion > current)
 				{
 					await Task.Delay(5000);
-					var result = await Helper.MainWindow.ShowMessageAsync("TwitchPlugin update available!", "(Plugins can not be updated automatically)",
-					                                   MessageDialogStyle.AffirmativeAndNegative,
-					                                   new MetroDialogSettings() {AffirmativeButtonText = "download", NegativeButtonText = "not now"});
+					var result =
+						await
+						Helper.MainWindow.ShowMessageAsync("TwitchPlugin update available!", "(Plugins can not be updated automatically)",
+						                                   MessageDialogStyle.AffirmativeAndNegative,
+						                                   new MetroDialogSettings {AffirmativeButtonText = "download", NegativeButtonText = "not now"});
 					if(result == MessageDialogResult.Affirmative)
 						Process.Start(@"https://github.com/Epix37/HDT-TwitchPlugin/releases");
-
 				}
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine("Error checking for new version.\n\n" + e, "TwitchPlugin");
 			}

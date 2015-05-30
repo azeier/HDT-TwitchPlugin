@@ -82,10 +82,11 @@ namespace TwitchPlugin
 			var ordered =
 				arenaRuns.Select(run => new {Run = run, Wins = run.DeckStats.Games.Count(g => g.Result == GameResult.Win)})
 				         .OrderByDescending(x => x.Wins);
-			var best = ordered.First();
-			var count = ordered.Count(x => x.Wins == best.Wins);
-			var countString = count > 1 ? string.Format(" ({0} times)", count) : "";
-			Core.Send(string.Format("Best arena run {0}: {1} with {2}{3}", timeFrame, best.Run.WinLossString, best.Run.Class, countString));
+			var best = ordered.Where(run => run.Wins == ordered.First().Wins).ToList();
+			var classesObj = best.Select(x => x.Run.Class).Distinct().Select(x => new {Class = x, Count = best.Count(c => c.Run.Class == x)});
+			var classes =
+				classesObj.Select(x => x.Class + (x.Count > 1 ? string.Format(" (x{0})", x.Count) : "")).Aggregate((c, n) => c + ", " + n);
+			Core.Send(string.Format("Best arena run {0}: {1} with {2}", timeFrame, best.First().Run.WinLossString, classes));
 		}
 
 		public static void BestDeckCommand(string arg)

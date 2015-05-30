@@ -44,14 +44,44 @@
                             <Run>Played {#games} games with {#used decks} decks. Total stats: {win-loss}</Run>
                             <LineBreak />
                             <Bold>timeframes:</Bold>
-                            <Run>today, week</Run>
+                            <Run>today, week, season, total</Run>
+                        </TextBlock>
+                    </GroupBox>
+                    <GroupBox Header="!arena {timeframe}">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run>Returns information about your best arena run for the given timeframe:</Run>
+                            <LineBreak />
+                            <Run>Best arena run {timeframe}: {win-loss} with {classes}</Run>
+                            <LineBreak />
+                            <Bold>timeframes:</Bold>
+                            <Run>today, week, season, total</Run>
+                        </TextBlock>
+                    </GroupBox>
+                    <GroupBox Header="!bestdeck {timeframe}">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run>Returns your best constructed deck (highest winrate) for the given timeframe:</Run>
+                            <LineBreak />
+                            <Run>Best deck {timeframe}: "{deckname}", Winrate: {win%} ({win-loss}), Decklist: {url}</Run>
+                            <LineBreak />
+                            <Bold>timeframes:</Bold>
+                            <Run>today, week, season, total</Run>
+                        </TextBlock>
+                    </GroupBox>
+                    <GroupBox Header="!mostplayed {timeframe}">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run>Returns your most played deck (highest number of games) for the given timeframe:</Run>
+                            <LineBreak />
+                            <Run>Most played deck {timeframe}: "{deckname}", Winrate: {win%} ({win-loss}), Decklist: {url}</Run>
+                            <LineBreak />
+                            <Bold>timeframes:</Bold>
+                            <Run>today, week, season, total</Run>
                         </TextBlock>
                     </GroupBox>
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="auto post game result">
                 <TextBlock TextWrapping="Wrap">
-                    <Run>Writes details about the last game, when entering the main menu after:</Run>
+                    <Run>Writes details about the match, after leaving the victory/defeat screen:</Run>
                     <LineBreak />
                     <Run>{result} VS {opponentname} ({opponent class}) after {x min}: {deck win-loss}</Run>
                 </TextBlock>
