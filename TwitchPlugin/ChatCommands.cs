@@ -108,12 +108,34 @@ namespace TwitchPlugin
 			var timeFrame = arg == "today" || arg == "total" ? arg : "this " + arg;
 			if(best == null)
 			{
-				Core.Send("No games played " + timeFrame);
+				if(Config.Instance.BestDeckGamesThreshold > 1)
+					Core.Send(string.Format("Not enough games played {0} (min: {1})", timeFrame, Config.Instance.BestDeckGamesThreshold));
+				else
+					Core.Send("No games played " + timeFrame);
 				return;
 			}
 			var winRate = Math.Round(100.0 * best.Wins / (best.Wins + best.Losses), 0);
 			Core.Send(string.Format("Best deck {0}: \"{1}\", Winrate: {2}% ({3}-{4}), Decklist: {5}", timeFrame, best.DeckObj.Deck.Name, winRate,
 			                        best.Wins, best.Losses, HssUrl + best.DeckObj.Deck.HearthStatsId));
+		}
+
+		public static void MostPlayedCommand(string arg)
+		{
+			var decks =
+				DeckList.Instance.Decks.Where(d => !d.IsArenaDeck)
+				        .Select(d => new {Deck = d, Games = d.DeckStats.Games.Where(TimeFrameFilter(arg))});
+			var mostPlayed = decks.Where(d => d.Games.Any()).OrderByDescending(d => d.Games.Count()).FirstOrDefault();
+			var timeFrame = arg == "today" || arg == "total" ? arg : "this " + arg;
+			if(mostPlayed == null)
+			{
+				Core.Send("No games played " + timeFrame);
+				return;
+			}
+			var wins = mostPlayed.Games.Count(g => g.Result == GameResult.Win);
+			var losses = mostPlayed.Games.Count(g => g.Result == GameResult.Loss);
+			var winRate = Math.Round(100.0 * wins / (wins + losses), 0);
+			Core.Send(string.Format("Most played deck {0}: \"{1}\", Winrate: {2}% ({3}-{4}), Decklist: {5}", timeFrame, mostPlayed.Deck.Name,
+			                        winRate, wins, losses, HssUrl + mostPlayed.Deck.HearthStatsId));
 		}
 
 		public static Func<GameStats, bool> TimeFrameFilter(string timeFrame)

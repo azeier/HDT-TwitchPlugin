@@ -127,12 +127,6 @@ namespace TwitchPlugin
 				_settingsWindow = new SettingsWindow();
 				_settingsWindow.Closed += (sender1, args1) => { _settingsWindow = null; };
 				_settingsWindow.Show();
-				if(_settingsWindow.CommandsList.Items.Count == 0)
-				{
-					_settingsWindow.Close();
-					_settingsWindow = new SettingsWindow();
-					_settingsWindow.Show();
-				}
 			}
 			else
 				_settingsWindow.Activate();

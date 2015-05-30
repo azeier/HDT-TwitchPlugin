@@ -20,18 +20,27 @@ namespace TwitchPlugin
 			AddCommand("deck", ChatCommands.DeckCommand, "ChatCommandDeck");
 			AddCommand("alldecks", ChatCommands.AllDecksCommand, "ChatCommandAllDecks");
 			AddCommand("hdt", ChatCommands.HdtCommand, "ChatCommandHdt");
-			AddCommand("stats today", () => ChatCommands.StatsCommand("today"), "ChatCommandStatsToday");
-			AddCommand("stats week", () => ChatCommands.StatsCommand("week"), "ChatCommandStatsWeek");
-			AddCommand("stats season", () => ChatCommands.StatsCommand("season"), "ChatCommandStatsSeason");
-			AddCommand("stats total", () => ChatCommands.StatsCommand("total"), "ChatCommandStatsTotal");
-			AddCommand("arena today", () => ChatCommands.ArenaCommand("today"), "ChatCommandArenaToday");
-			AddCommand("arena week", () => ChatCommands.ArenaCommand("week"), "ChatCommandArenaWeek");
-			AddCommand("arena season", () => ChatCommands.ArenaCommand("season"), "ChatCommandArenaSeason");
-			AddCommand("arena total", () => ChatCommands.ArenaCommand("total"), "ChatCommandArenaTotal");
-			AddCommand("bestdeck today", () => ChatCommands.BestDeckCommand("today"), "ChatCommandBestDeckToday");
-			AddCommand("bestdeck week", () => ChatCommands.BestDeckCommand("week"), "ChatCommandBestDeckWeek");
-			AddCommand("bestdeck season", () => ChatCommands.BestDeckCommand("season"), "ChatCommandBestDeckSeason");
-			AddCommand("bestdeck total", () => ChatCommands.BestDeckCommand("total"), "ChatCommandBestDeckTotal");
+			AddCommand("stats today", () => ChatCommands.StatsCommand("today"), "ChatCommandStatsToday", "ChatCommandStatsGeneral");
+			AddCommand("stats week", () => ChatCommands.StatsCommand("week"), "ChatCommandStatsWeek", "ChatCommandStatsGeneral");
+			AddCommand("stats season", () => ChatCommands.StatsCommand("season"), "ChatCommandStatsSeason", "ChatCommandStatsGeneral");
+			AddCommand("stats total", () => ChatCommands.StatsCommand("total"), "ChatCommandStatsTotal", "ChatCommandStatsGeneral");
+			AddCommand("arena today", () => ChatCommands.ArenaCommand("today"), "ChatCommandArenaToday", "ChatCommandArenaGeneral");
+			AddCommand("arena week", () => ChatCommands.ArenaCommand("week"), "ChatCommandArenaWeek", "ChatCommandArenaGeneral");
+			AddCommand("arena season", () => ChatCommands.ArenaCommand("season"), "ChatCommandArenaSeason", "ChatCommandArenaGeneral");
+			AddCommand("arena total", () => ChatCommands.ArenaCommand("total"), "ChatCommandArenaTotal", "ChatCommandArenaGeneral");
+			AddCommand("bestdeck today", () => ChatCommands.BestDeckCommand("today"), "ChatCommandBestDeckToday", "ChatCommandBestDeckGeneral");
+			AddCommand("bestdeck week", () => ChatCommands.BestDeckCommand("week"), "ChatCommandBestDeckWeek", "ChatCommandBestDeckGeneral");
+			AddCommand("bestdeck season", () => ChatCommands.BestDeckCommand("season"), "ChatCommandBestDeckSeason",
+			           "ChatCommandBestDeckGeneral");
+			AddCommand("bestdeck total", () => ChatCommands.BestDeckCommand("total"), "ChatCommandBestDeckTotal", "ChatCommandBestDeckGeneral");
+			AddCommand("mostplayed today", () => ChatCommands.MostPlayedCommand("today"), "ChatCommandMostPlayedToday",
+			           "ChatCommandMostPlayedGeneral");
+			AddCommand("mostplayed week", () => ChatCommands.MostPlayedCommand("week"), "ChatCommandMostPlayedWeek",
+			           "ChatCommandMostPlayedGeneral");
+			AddCommand("mostplayed season", () => ChatCommands.MostPlayedCommand("season"), "ChatCommandMostPlayedSeason",
+			           "ChatCommandMostPlayedGeneral");
+			AddCommand("mostplayed total", () => ChatCommands.MostPlayedCommand("total"), "ChatCommandMostPlayedTotal",
+			           "ChatCommandMostPlayedGeneral");
 		}
 
 		public static string TwitchTag
@@ -44,9 +53,9 @@ namespace TwitchPlugin
 			return Commands.Select(x => x.Key).ToList();
 		}
 
-		public static void AddCommand(string command, Action action, string propName)
+		public static void AddCommand(string command, Action action, string propName, string generalPropName = null)
 		{
-			Commands.Add(command, new ChatCommand(command, action, propName));
+			Commands.Add(command, new ChatCommand(command, action, propName, generalPropName));
 		}
 
 		internal static void Send(string message)
@@ -96,19 +105,26 @@ namespace TwitchPlugin
 		private readonly Action _action;
 		private readonly string _command;
 		private readonly string _configItem;
+		private readonly string _generalConfigItem;
 		private DateTime _lastExecute;
 
-		public ChatCommand(string command, Action action, string configItem)
+		public ChatCommand(string command, Action action, string configItem, string generalConfigItem = null)
 		{
 			_command = command;
 			_action = action;
 			_lastExecute = DateTime.MinValue;
 			_configItem = configItem;
+			_generalConfigItem = generalConfigItem;
 		}
 
 		public void Execute(TwitchChatMessage msg)
 		{
 			Logger.WriteLine(string.Format("Command \"{0}\" requested by {1}.", _command, msg.User), "TwitchPlugin");
+			if(_generalConfigItem != null && !Config.GetConfigItem<bool>(_generalConfigItem))
+			{
+				Logger.WriteLine(string.Format("Command \"{0}\" is disabled (general).", _command), "TwitchPlugin");
+				return;
+			}
 			if(!Config.GetConfigItem<bool>(_configItem))
 			{
 				Logger.WriteLine(string.Format("Command \"{0}\" is disabled.", _command), "TwitchPlugin");
