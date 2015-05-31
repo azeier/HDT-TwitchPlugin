@@ -11,6 +11,8 @@ namespace TwitchPlugin
 	{
 		private static Config _instance;
 
+		public static string[] TimeFrames { get { return new[] {"today", "week", "season", "total"}; } }
+
 		public Config()
 		{
 			AutoPostGameResult = true;
@@ -19,21 +21,25 @@ namespace TwitchPlugin
 			ChatCommandAllDecks = true;
 			ChatCommandHdt = true;
 			ChatCommandStatsGeneral = true;
+			ChatCommandStatsDefault = "today";
 			ChatCommandStatsToday = true;
 			ChatCommandStatsWeek = true;
 			ChatCommandStatsSeason = true;
 			ChatCommandStatsTotal = true;
 			ChatCommandArenaGeneral = true;
+			ChatCommandArenaDefault = "today";
 			ChatCommandArenaToday = true;
 			ChatCommandArenaWeek = true;
 			ChatCommandArenaSeason = true;
 			ChatCommandArenaTotal = true;
 			ChatCommandBestDeckGeneral = true;
+			ChatCommandBestDeckDefault = "today";
 			ChatCommandBestDeckToday = true;
 			ChatCommandBestDeckWeek = true;
 			ChatCommandBestDeckSeason = true;
 			ChatCommandBestDeckTotal = true;
 			ChatCommandMostPlayedGeneral = true;
+			ChatCommandMostPlayedDefault = "today";
 			ChatCommandMostPlayedToday = true;
 			ChatCommandMostPlayedWeek = true;
 			ChatCommandMostPlayedSeason = true;
@@ -55,21 +61,25 @@ namespace TwitchPlugin
 		public bool ChatCommandAllDecks { get; set; }
 		public bool ChatCommandHdt { get; set; }
 		public bool ChatCommandStatsGeneral { get; set; }
+		public string ChatCommandStatsDefault { get; set; }
 		public bool ChatCommandStatsToday { get; set; }
 		public bool ChatCommandStatsWeek { get; set; }
 		public bool ChatCommandStatsSeason { get; set; }
 		public bool ChatCommandStatsTotal { get; set; }
 		public bool ChatCommandArenaGeneral { get; set; }
+		public string ChatCommandArenaDefault { get; set; }
 		public bool ChatCommandArenaToday { get; set; }
 		public bool ChatCommandArenaWeek { get; set; }
 		public bool ChatCommandArenaSeason { get; set; }
 		public bool ChatCommandArenaTotal { get; set; }
 		public bool ChatCommandBestDeckGeneral { get; set; }
+		public string ChatCommandBestDeckDefault { get; set; }
 		public bool ChatCommandBestDeckToday { get; set; }
 		public bool ChatCommandBestDeckWeek { get; set; }
 		public bool ChatCommandBestDeckSeason { get; set; }
 		public bool ChatCommandBestDeckTotal { get; set; }
 		public bool ChatCommandMostPlayedGeneral { get; set; }
+		public string ChatCommandMostPlayedDefault { get; set; }
 		public bool ChatCommandMostPlayedToday { get; set; }
 		public bool ChatCommandMostPlayedWeek { get; set; }
 		public bool ChatCommandMostPlayedSeason { get; set; }

@@ -14,7 +14,10 @@ namespace TwitchPlugin
 	public class ChatCommands
 	{
 		private const string HssUrl = "http://hss.io/d/";
-		private static int _winStreak;
+
+		private const string MissingTimeFrameMessage =
+			"Please specify a timeframe. Available timeframes are: today, week, season and total. (Example: !{0} today)";
+        private static int _winStreak;
 		private static GameStats _lastGame;
 		private static readonly string[] KillingSprees = {"Killing Spree", "Rampage", "Dominating", "Unstoppable", "GODLIKE", "WICKED SICK"};
 
@@ -45,6 +48,11 @@ namespace TwitchPlugin
 
 		public static void StatsCommand(string arg)
 		{
+			if(string.IsNullOrEmpty(arg))
+			{
+				Core.Send(string.Format(MissingTimeFrameMessage, "stats"));
+				return;
+			}
 			var games = DeckStatsList.Instance.DeckStats.SelectMany(ds => ds.Games).Where(TimeFrameFilter(arg)).ToList();
 			var numGames = games.Count;
 			var timeFrame = arg == "today" || arg == "total" ? arg : "this " + arg;
@@ -62,6 +70,11 @@ namespace TwitchPlugin
 
 		public static void ArenaCommand(string arg)
 		{
+			if(string.IsNullOrEmpty(arg))
+			{
+				Core.Send(string.Format(MissingTimeFrameMessage, "arena"));
+				return;
+			}
 			var arenaRuns = DeckList.Instance.Decks.Where(d => d.IsArenaDeck).ToList();
 			switch(arg)
 			{
@@ -98,6 +111,11 @@ namespace TwitchPlugin
 
 		public static void BestDeckCommand(string arg)
 		{
+			if(string.IsNullOrEmpty(arg))
+			{
+				Core.Send(string.Format(MissingTimeFrameMessage, "bestdeck"));
+				return;
+			}
 			var decks =
 				DeckList.Instance.Decks.Where(d => !d.IsArenaDeck)
 				        .Select(d => new {Deck = d, Games = d.DeckStats.Games.Where(TimeFrameFilter(arg))});
@@ -129,6 +147,11 @@ namespace TwitchPlugin
 
 		public static void MostPlayedCommand(string arg)
 		{
+			if(string.IsNullOrEmpty(arg))
+			{
+				Core.Send(string.Format(MissingTimeFrameMessage, "mostplayed"));
+				return;
+			}
 			var decks =
 				DeckList.Instance.Decks.Where(d => !d.IsArenaDeck)
 				        .Select(d => new {Deck = d, Games = d.DeckStats.Games.Where(TimeFrameFilter(arg))});

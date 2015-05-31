@@ -21,19 +21,24 @@ namespace TwitchPlugin
 			AddCommand("deck", ChatCommands.DeckCommand, "ChatCommandDeck");
 			AddCommand("alldecks", ChatCommands.AllDecksCommand, "ChatCommandAllDecks");
 			AddCommand("hdt", ChatCommands.HdtCommand, "ChatCommandHdt");
+			AddCommand("stats", () => ChatCommands.StatsCommand(Config.Instance.ChatCommandStatsDefault), "ChatCommandStatsGeneral");
 			AddCommand("stats today", () => ChatCommands.StatsCommand("today"), "ChatCommandStatsToday", "ChatCommandStatsGeneral");
 			AddCommand("stats week", () => ChatCommands.StatsCommand("week"), "ChatCommandStatsWeek", "ChatCommandStatsGeneral");
 			AddCommand("stats season", () => ChatCommands.StatsCommand("season"), "ChatCommandStatsSeason", "ChatCommandStatsGeneral");
 			AddCommand("stats total", () => ChatCommands.StatsCommand("total"), "ChatCommandStatsTotal", "ChatCommandStatsGeneral");
+			AddCommand("arena", () => ChatCommands.ArenaCommand(Config.Instance.ChatCommandArenaDefault), "ChatCommandArenaGeneral");
 			AddCommand("arena today", () => ChatCommands.ArenaCommand("today"), "ChatCommandArenaToday", "ChatCommandArenaGeneral");
 			AddCommand("arena week", () => ChatCommands.ArenaCommand("week"), "ChatCommandArenaWeek", "ChatCommandArenaGeneral");
 			AddCommand("arena season", () => ChatCommands.ArenaCommand("season"), "ChatCommandArenaSeason", "ChatCommandArenaGeneral");
 			AddCommand("arena total", () => ChatCommands.ArenaCommand("total"), "ChatCommandArenaTotal", "ChatCommandArenaGeneral");
+			AddCommand("bestdeck", () => ChatCommands.BestDeckCommand(Config.Instance.ChatCommandBestDeckDefault), "ChatCommandBestDeckGeneral");
 			AddCommand("bestdeck today", () => ChatCommands.BestDeckCommand("today"), "ChatCommandBestDeckToday", "ChatCommandBestDeckGeneral");
 			AddCommand("bestdeck week", () => ChatCommands.BestDeckCommand("week"), "ChatCommandBestDeckWeek", "ChatCommandBestDeckGeneral");
 			AddCommand("bestdeck season", () => ChatCommands.BestDeckCommand("season"), "ChatCommandBestDeckSeason",
 			           "ChatCommandBestDeckGeneral");
 			AddCommand("bestdeck total", () => ChatCommands.BestDeckCommand("total"), "ChatCommandBestDeckTotal", "ChatCommandBestDeckGeneral");
+			AddCommand("mostplayed", () => ChatCommands.MostPlayedCommand(Config.Instance.ChatCommandMostPlayedDefault),
+			           "ChatCommandMostPlayedGeneral");
 			AddCommand("mostplayed today", () => ChatCommands.MostPlayedCommand("today"), "ChatCommandMostPlayedToday",
 			           "ChatCommandMostPlayedGeneral");
 			AddCommand("mostplayed week", () => ChatCommands.MostPlayedCommand("week"), "ChatCommandMostPlayedWeek",
