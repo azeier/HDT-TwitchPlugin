@@ -46,11 +46,17 @@ namespace TwitchPlugin
 		{
 			var games = DeckStatsList.Instance.DeckStats.SelectMany(ds => ds.Games).Where(TimeFrameFilter(arg)).ToList();
 			var numGames = games.Count;
+			var timeFrame = arg == "today" || arg == "total" ? arg : "this " + arg;
+			if(numGames == 0)
+			{
+				Core.Send(string.Format("No games played {0}.", timeFrame));
+				return;
+			}
 			var numDecks = games.Select(g => g.DeckId).Distinct().Count();
 			var wins = games.Count(g => g.Result == GameResult.Win);
 			var winRate = Math.Round(100.0 * wins / numGames);
-			Core.Send(string.Format("Played {0} games with {1} decks. Total stats: {2}-{3} ({4}%)", numGames, numDecks, wins, numGames - wins,
-			                        winRate));
+			Core.Send(string.Format("Played {0} games with {1} decks {2}. Total stats: {3}-{4} ({5}%)", numGames, numDecks, timeFrame, wins,
+			                        numGames - wins, winRate));
 		}
 
 		public static void ArenaCommand(string arg)
@@ -73,7 +79,7 @@ namespace TwitchPlugin
 				default:
 					return;
 			}
-			var timeFrame = arg == "today" ? arg : "this " + arg;
+			var timeFrame = arg == "today" || arg == "total" ? arg : "this " + arg;
 			if(!arenaRuns.Any())
 			{
 				Core.Send(string.Format("No arena runs {0}.", timeFrame));
@@ -144,7 +150,7 @@ namespace TwitchPlugin
 			switch(timeFrame)
 			{
 				case "today":
-					return game => game.StartTime == DateTime.Today;
+					return game => game.StartTime.Date == DateTime.Today;
 				case "week":
 					return game => game.StartTime > DateTime.Today.AddDays(-7);
 				case "season":
