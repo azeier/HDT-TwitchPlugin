@@ -14,6 +14,7 @@ namespace TwitchPlugin
 		public Config()
 		{
 			AutoPostGameResult = true;
+			ChatCommandCommands = true;
 			ChatCommandDeck = true;
 			ChatCommandAllDecks = true;
 			ChatCommandHdt = true;
@@ -49,6 +50,7 @@ namespace TwitchPlugin
 		public string OAuth { get; set; }
 		public string Channel { get; set; }
 		public bool AutoPostGameResult { get; set; }
+		public bool ChatCommandCommands { get; set; }
 		public bool ChatCommandDeck { get; set; }
 		public bool ChatCommandAllDecks { get; set; }
 		public bool ChatCommandHdt { get; set; }

@@ -17,6 +17,7 @@ namespace TwitchPlugin
 		static Core()
 		{
 			Commands = new Dictionary<string, ChatCommand>();
+			AddCommand("commands", ChatCommands.CommandsCommand, "ChatCommandCommands");
 			AddCommand("deck", ChatCommands.DeckCommand, "ChatCommandDeck");
 			AddCommand("alldecks", ChatCommands.AllDecksCommand, "ChatCommandAllDecks");
 			AddCommand("hdt", ChatCommands.HdtCommand, "ChatCommandHdt");

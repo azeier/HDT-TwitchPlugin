@@ -23,7 +23,8 @@ namespace TwitchPlugin
 			var decks = DeckList.Instance.Decks.Where(d => d.Tags.Contains(Core.TwitchTag)).ToList();
 			if(!decks.Any())
 				return;
-			var response = decks.Select(d => string.Format("{0}:{1}", d.Name.Replace(" ", "_"), HssUrl + d.HearthStatsId)).Aggregate((c, n) => c + ", " + n);
+			var response =
+				decks.Select(d => string.Format("{0}:{1}", d.Name.Replace(" ", "_"), HssUrl + d.HearthStatsId)).Aggregate((c, n) => c + ", " + n);
 			Core.Send(response);
 		}
 
@@ -220,6 +221,11 @@ namespace TwitchPlugin
 				default:
 					return number + "th";
 			}
+		}
+
+		public static void CommandsCommand()
+		{
+			Core.Send("List of available commands: https://github.com/Epix37/HDT-TwitchPlugin/wiki/Commands");
 		}
 	}
 }

@@ -6,7 +6,7 @@
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:twitchPlugin="clr-namespace:TwitchPlugin"
                       WindowStyle="ToolWindow" Title="SETTINGS" BorderBrush="{DynamicResource AccentColorBrush}"
-                      mc:Ignorable="d" Width="385" Height="548">
+                      mc:Ignorable="d" Width="385" Height="592">
     <controls:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -65,86 +65,82 @@
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Commands">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <CheckBox Content="!deck" Grid.Row="0" Grid.Column="0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandDeck}" />
-                    <CheckBox Content="!alldecks" Grid.Row="1" Grid.Column="0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandAllDecks}" />
-                    <CheckBox Content="!hdt" Grid.Row="2" Grid.Column="0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandHdt}" />
-                    <CheckBox Content="!stats" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsGeneral}" />
-                    <CheckBox Content="today" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsToday}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsGeneral}" />
-                    <CheckBox Content="week" Grid.Row="3" Grid.Column="2" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsWeek}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsGeneral}" />
-                    <CheckBox Content="season" Grid.Row="3" Grid.Column="3" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsSeason}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsGeneral}" />
-                    <CheckBox Content="total" Grid.Row="3" Grid.Column="4" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsTotal}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsGeneral}" />
-                    <CheckBox Content="!arena" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaGeneral}" />
-                    <CheckBox Content="today" Grid.Row="4" Grid.Column="1" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaToday}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaGeneral}" />
-                    <CheckBox Content="week" Grid.Row="4" Grid.Column="2" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaWeek}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaGeneral}" />
-                    <CheckBox Content="season" Grid.Row="4" Grid.Column="3" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaSeason}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaGeneral}" />
-                    <CheckBox Content="total" Grid.Row="4" Grid.Column="4" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaTotal}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaGeneral}" />
-                    <CheckBox Content="!bestdeck" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckGeneral}" />
-                    <CheckBox Content="today" Grid.Row="5" Grid.Column="1" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckToday}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckGeneral}" />
-                    <CheckBox Content="week" Grid.Row="5" Grid.Column="2" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckWeek}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckGeneral}" />
-                    <CheckBox Content="season" Grid.Row="5" Grid.Column="3" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckSeason}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckGeneral}" />
-                    <CheckBox Content="total" Grid.Row="5" Grid.Column="4" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckTotal}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckGeneral}" />
-                    <CheckBox Content="!mostplayed" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedGeneral}" />
-                    <CheckBox Content="today" Grid.Row="6" Grid.Column="1" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedToday}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedGeneral}" />
-                    <CheckBox Content="week" Grid.Row="6" Grid.Column="2" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedWeek}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedGeneral}" />
-                    <CheckBox Content="season" Grid.Row="6" Grid.Column="3" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedSeason}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedGeneral}" />
-                    <CheckBox Content="total" Grid.Row="6" Grid.Column="4" Margin="5,0,0,0"
-                              IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedTotal}"
-                              IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedGeneral}" />
-                </Grid>
+                <ScrollViewer>
+                    <StackPanel>
+                        <CheckBox Content="!commands"
+                                  IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandCommands}" />
+                        <CheckBox Content="!hdt" Margin="0,5,0,0"
+                                  IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandHdt}" />
+                        <CheckBox Content="!deck" Margin="0,5,0,0"
+                                  IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandDeck}" />
+                        <CheckBox Content="!alldecks" Margin="0,5,0,0"
+                                  IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandAllDecks}" />
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <CheckBox Content="!stats" VerticalAlignment="Center" Width="100"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsGeneral}" />
+                            <CheckBox Content="today" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsToday}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsGeneral}" />
+                            <CheckBox Content="week" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsWeek}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsGeneral}" />
+                            <CheckBox Content="season" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsSeason}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsGeneral}" />
+                            <CheckBox Content="total" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsTotal}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandStatsGeneral}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <CheckBox Content="!arena" VerticalAlignment="Center" Width="100"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaGeneral}" />
+                            <CheckBox Content="today" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaToday}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaGeneral}" />
+                            <CheckBox Content="week" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaWeek}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaGeneral}" />
+                            <CheckBox Content="season" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaSeason}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaGeneral}" />
+                            <CheckBox Content="total" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaTotal}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandArenaGeneral}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <CheckBox Content="!bestdeck" VerticalAlignment="Center" Width="100"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckGeneral}" />
+                            <CheckBox Content="today" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckToday}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckGeneral}" />
+                            <CheckBox Content="week" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckWeek}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckGeneral}" />
+                            <CheckBox Content="season" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckSeason}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckGeneral}" />
+                            <CheckBox Content="total" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckTotal}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandBestDeckGeneral}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <CheckBox Content="!mostplayed" VerticalAlignment="Center" Width="100"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedGeneral}" />
+                            <CheckBox Content="today" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedToday}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedGeneral}" />
+                            <CheckBox Content="week" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedWeek}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedGeneral}" />
+                            <CheckBox Content="season" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedSeason}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedGeneral}" />
+                            <CheckBox Content="total" Margin="5,0,0,0"
+                                      IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedTotal}"
+                                      IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=ChatCommandMostPlayedGeneral}" />
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
             </GroupBox>
         </DockPanel>
     </DockPanel>

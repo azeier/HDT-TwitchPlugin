@@ -12,6 +12,11 @@
             </GroupBox>
             <GroupBox Header="COMMANDS">
                 <StackPanel>
+                    <GroupBox Header="!commands">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run>Returns a list of enabled commands.</Run>
+                        </TextBlock>
+                    </GroupBox>
                     <GroupBox Header="!deck">
                         <TextBlock TextWrapping="Wrap">
                             <Run>Returns information about the currently active (selected) deck.</Run>
