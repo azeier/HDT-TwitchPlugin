@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -26,6 +27,8 @@ namespace TwitchPlugin
 		private void Button_ClickSave(object sender, RoutedEventArgs e)
 		{
 			Config.Instance.Channel = TexBoxChannel.Text;
+			if(Config.Instance.Channel.Contains("/"))	 //user entered channel url instead of name
+				Config.Instance.Channel = new string(Config.Instance.Channel.Reverse().TakeWhile(c => c != '/').Reverse().ToArray());
 			Config.Instance.User = TextBoxUser.Text;
 			Config.Instance.OAuth = TextBoxOAuth.Password.Replace("oauth:", "");
 			Config.Save();

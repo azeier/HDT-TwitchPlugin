@@ -72,6 +72,7 @@ namespace TwitchPlugin
 
 		public static bool Connect()
 		{
+			Logger.WriteLine("Logging in as " + Config.Instance.User);
 			_irc = new IRC(Config.Instance.User, Config.Instance.User, Config.Instance.OAuth);
 			var success = _irc.Connect("irc.twitch.tv", 6667);
 			if(success)

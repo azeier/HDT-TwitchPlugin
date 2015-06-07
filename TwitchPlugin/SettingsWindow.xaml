@@ -41,7 +41,7 @@
                         get oauth key here
                     </Hyperlink>
                 </TextBlock>
-                <TextBox Name="TexBoxChannel" controls:TextBoxHelper.Watermark="your channel" DockPanel.Dock="Top"
+                <TextBox Name="TexBoxChannel" controls:TextBoxHelper.Watermark="your channel (username, not url)" DockPanel.Dock="Top"
                          Margin="2" />
             </StackPanel>
         </GroupBox>
