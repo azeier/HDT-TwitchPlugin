@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hearthstone Deck Tracker">
-      <HintPath>..\Hearthstone Deck Tracker\Hearthstone Deck Tracker.exe</HintPath>
+    <Reference Include="HearthstoneDeckTracker">
+      <HintPath>..\..\..\..\Visual Studio 2012\Projects\Hearthstone Deck Tracker\Hearthstone Deck Tracker\bin\Debug\HearthstoneDeckTracker.exe</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro">
       <HintPath>..\..\..\..\Visual Studio 2012\Projects\Hearthstone Deck Tracker\Hearthstone Deck Tracker\bin\Debug\MahApps.Metro.dll</HintPath>

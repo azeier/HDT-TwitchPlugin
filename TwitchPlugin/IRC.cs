@@ -132,6 +132,8 @@ namespace TwitchPlugin
 		{
 			string data = param == "" ? cmd : cmd + " " + param;
 			_writer.WriteLine(data);
+			if(Config.Instance.IrcLogging)
+				Logger.WriteLine(data, "TwitchPlugin-IRC");
 		}
 	}
 }

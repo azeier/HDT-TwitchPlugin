@@ -16,6 +16,7 @@ namespace TwitchPlugin
 		public Config()
 		{
 			AutoPostGameResult = true;
+			AutoPostDelay = 0;
 			ChatCommandCommands = true;
 			ChatCommandDeck = true;
 			ChatCommandAllDecks = true;
@@ -45,6 +46,8 @@ namespace TwitchPlugin
 			ChatCommandMostPlayedSeason = true;
 			ChatCommandMostPlayedTotal = true;
 			BestDeckGamesThreshold = 3;
+			StatsFileName = "hdt_activedeck_stats.txt";
+			StatsFileDir = Hearthstone_Deck_Tracker.Config.Instance.DataDirPath;
 		}
 
 		public static Config Instance
@@ -56,6 +59,7 @@ namespace TwitchPlugin
 		public string OAuth { get; set; }
 		public string Channel { get; set; }
 		public bool AutoPostGameResult { get; set; }
+		public int AutoPostDelay { get; set; }
 		public bool ChatCommandCommands { get; set; }
 		public bool ChatCommandDeck { get; set; }
 		public bool ChatCommandAllDecks { get; set; }
@@ -85,6 +89,11 @@ namespace TwitchPlugin
 		public bool ChatCommandMostPlayedSeason { get; set; }
 		public bool ChatCommandMostPlayedTotal { get; set; }
 		public int BestDeckGamesThreshold { get; set; }
+		public bool SaveStatsToFile { get; set; }
+		public string StatsFileDir { get; set; }
+		public string StatsFileName { get; set; }
+		public string StatsFileFullPath { get { return Path.Combine(StatsFileDir, StatsFileName); } }
+		public bool IrcLogging { get; set; }
 
 		private static string FilePath
 		{

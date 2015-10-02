@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -33,7 +34,12 @@ namespace TwitchPlugin
 
 		public static void DeckCommand()
 		{
-			var deck = DeckList.Instance.ActiveDeck;
+			var deck = DeckList.Instance.ActiveDeckVersion;
+			if(deck == null)
+			{
+				Core.Send("No active deck.");
+				return;
+			}
 			if(deck.IsArenaDeck)
 			{
 				Core.Send(string.Format("Current arena run ({0}): {1}, DeckList: {2}", deck.Class, deck.WinLossString,
@@ -193,14 +199,14 @@ namespace TwitchPlugin
 
 		public static void OnGameEnd()
 		{
-			_lastGame = Game.CurrentGameStats.CloneWithNewId();
+			_lastGame = Hearthstone_Deck_Tracker.API.Core.Game.CurrentGameStats.CloneWithNewId();
 			if(_lastGame.Result == GameResult.Win)
 				_winStreak++;
 			else
 				_winStreak = 0;
 		}
 
-		public static void OnInMenu()
+		public static async void OnInMenu()
 		{
 			if(!Config.Instance.AutoPostGameResult)
 				return;
@@ -209,10 +215,17 @@ namespace TwitchPlugin
 			var winStreak = _winStreak > 2
 				                ? string.Format("{0}! {1} win in a row", GetKillingSpree(_winStreak), GetOrdinal(_winStreak))
 				                : _lastGame.Result.ToString();
-			var deck = DeckList.Instance.ActiveDeck;
-			Core.Send(string.Format("{0} vs {1} ({2}) after {3}: {4}", winStreak, _lastGame.OpponentName, _lastGame.OpponentHero.ToLower(),
-			                        _lastGame.Duration, deck.WinLossString));
+			var deck = DeckList.Instance.ActiveDeckVersion;
+			var winLossString = deck != null ? ": " + deck.WinLossString : "";
+            var message = string.Format("{0} vs {1} ({2}) after {3}{4}", winStreak, _lastGame.OpponentName, _lastGame.OpponentHero.ToLower(),
+			                            _lastGame.Duration, winLossString);
 			_lastGame = null;
+			if(Config.Instance.AutoPostDelay > 0)
+			{
+				Logger.WriteLine(string.Format("Waiting {0} seconds before posting game result...", Config.Instance.AutoPostDelay), "TwitchPlugin");
+				await Task.Delay(Config.Instance.AutoPostDelay * 1000);
+			}
+			Core.Send(message);
 		}
 
 		private static string GetKillingSpree(int wins)

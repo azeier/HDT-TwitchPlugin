@@ -2,8 +2,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Hearthstone_Deck_Tracker;
+using Hearthstone_Deck_Tracker.Enums;
 
 #endregion
 
@@ -103,6 +106,34 @@ namespace TwitchPlugin
 				Send("Bye! (Hearthstone Deck Tracker disconnected)");
 				_irc.LeaveChannel(Config.Instance.Channel);
 				_irc.Quit();
+			}
+		}
+
+		private static string _currentFileContent;
+		public static void Update()
+		{
+			if(Config.Instance.SaveStatsToFile)
+			{
+				if(DeckList.Instance.ActiveDeckVersion == null)
+					return;
+				var games = DeckList.Instance.ActiveDeckVersion.GetRelevantGames();
+                var wins = games.Count(g => g.Result == GameResult.Win);
+				var losses = games.Count(g => g.Result == GameResult.Loss);
+				var resultString = string.Format("{0} - {1}", wins, losses);
+				if(_currentFileContent == resultString)
+					return;
+				try
+				{
+					using(var sr = new StreamWriter(Config.Instance.StatsFileFullPath))
+						sr.WriteLine(resultString);
+					_currentFileContent = resultString;
+				}
+				catch(Exception ex)
+				{
+					//uncomment for v0.11.5 ?
+					//Hearthstone_Deck_Tracker.API.Errors.ShowErrorMessage("TwitchPlugin", ex.ToString());
+					Logger.WriteLine("Error writing to stats file: " + ex, "TwitchPlugin");
+				}
 			}
 		}
 	}

@@ -1,11 +1,15 @@
 ﻿#region
 
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using Hearthstone_Deck_Tracker;
 
 #endregion
 
@@ -49,6 +53,36 @@ namespace TwitchPlugin
 		{
 			var regex = new Regex("[^0-9]+");
 			e.Handled = regex.IsMatch(e.Text);
+		}
+
+		private void ButtonSetStatsFilePath_OnClick(object sender, RoutedEventArgs e)
+		{
+			var folderDialog = new FolderBrowserDialog();
+			folderDialog.ShowDialog();
+			try
+			{
+				var newFile = Path.Combine(folderDialog.SelectedPath, Config.Instance.StatsFileName);
+				File.Create(newFile);
+
+				try
+				{
+					File.Delete(Config.Instance.StatsFileFullPath);
+				}
+				catch
+				{
+
+				}
+
+				Config.Instance.StatsFileDir = folderDialog.SelectedPath;
+				Config.Save();
+
+			}
+			catch(Exception ex)
+			{
+				//uncomment for v0.11.5?
+				//Hearthstone_Deck_Tracker.API.Errors.ShowErrorMessage("TwitchPlugin", "Could not access selected path. Please choose another one. \n\n" + ex);
+				Logger.WriteLine("Could not access selected path: " + ex, "TwitchPlugin");
+			}
 		}
 	}
 }

@@ -39,6 +39,7 @@ namespace TwitchPlugin
 
 		public void OnUpdate()
 		{
+			Core.Update();
 		}
 
 		public string Name

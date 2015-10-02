@@ -33,7 +33,7 @@ namespace TwitchPlugin
 					await Task.Delay(5000);
 					var result =
 						await
-						Helper.MainWindow.ShowMessageAsync("TwitchPlugin update available!", "(Plugins can not be updated automatically)",
+						Hearthstone_Deck_Tracker.API.Core.MainWindow.ShowMessageAsync("TwitchPlugin update available!", "(Plugins can not be updated automatically)",
 						                                   MessageDialogStyle.AffirmativeAndNegative,
 						                                   new MetroDialogSettings {AffirmativeButtonText = "download", NegativeButtonText = "not now"});
 					if(result == MessageDialogResult.Affirmative)

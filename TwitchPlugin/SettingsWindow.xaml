@@ -50,18 +50,31 @@
             <Button Content="save &amp; close" Click="Button_ClickSave" Margin="5" />
         </DockPanel>
         <GroupBox Header="OTHER" DockPanel.Dock="Bottom">
-            <DockPanel>
-                <TextBlock Text="Best deck min. games:" VerticalAlignment="Center" />
-                <TextBox Margin="5,0,0,0"
+            <StackPanel>
+                <DockPanel>
+                    <TextBlock Text="Best deck min. games:" VerticalAlignment="Center" />
+                    <TextBox Margin="5,0,0,0"
                          Text="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=BestDeckGamesThreshold}"
                          PreviewTextInput="TexBoxMinGames_OnPreviewTextInput" />
-            </DockPanel>
+                </DockPanel>
+                <DockPanel Margin="0,5,0,0">
+                    <Button Name="ButtonSetStatsFilePath" Content="Set Path" Width="200" DockPanel.Dock="Right" IsEnabled="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=SaveStatsToFile}" Click="ButtonSetStatsFilePath_OnClick"/>
+                    <CheckBox Content="Save stat of active deck to file" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=SaveStatsToFile}"/>
+                </DockPanel>
+                <CheckBox Margin="0,5,0,0" Content="[Debug] Log IRC messages" IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=IrcLogging}"/>
+            </StackPanel>
         </GroupBox>
         <DockPanel>
             <GroupBox Header="Auto" DockPanel.Dock="Bottom">
                 <StackPanel>
                     <CheckBox Content="Auto post game result"
                               IsChecked="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=AutoPostGameResult}" />
+                    <DockPanel>
+                        <TextBlock Text="Delay:"/>
+                        <TextBlock Text="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=AutoPostDelay}" Margin="5,0,0,0"/>
+                        <TextBlock Text="seconds" Margin="5,0,0,0"/>
+                        <Slider Name="SliderAutoPostDelay" Minimum="0" Maximum="600" Value="{Binding Source={x:Static twitchPlugin:Config.Instance}, Path=AutoPostDelay}" Margin="5,0,0,0"/>
+                    </DockPanel>
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Commands">
