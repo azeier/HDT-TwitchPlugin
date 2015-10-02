@@ -66,7 +66,7 @@ namespace TwitchPlugin
 				string oauth = _oauth;
 				if(!oauth.StartsWith("oauth:"))
 					oauth = "oauth:" + _oauth;
-				SendData("PASS", oauth);
+				SendData("PASS", oauth, false);
 				SendData("NICK", _nick);
 				SendData("USER", _name + " 8 * :" + _nick);
 				//SendData("JTVCLIENT");
@@ -128,11 +128,11 @@ namespace TwitchPlugin
 			}
 		}
 
-		private void SendData(string cmd, string param = "")
+		private void SendData(string cmd, string param = "", bool log = true)
 		{
 			string data = param == "" ? cmd : cmd + " " + param;
 			_writer.WriteLine(data);
-			if(Config.Instance.IrcLogging)
+			if(Config.Instance.IrcLogging && log)
 				Logger.WriteLine(data, "TwitchPlugin-IRC");
 		}
 	}
