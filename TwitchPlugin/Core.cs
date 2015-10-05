@@ -69,6 +69,8 @@ namespace TwitchPlugin
 
 		internal static void Send(string message)
 		{
+			if(_irc == null)
+				return;
 			_irc.SendMessage(Config.Instance.Channel, message);
 			Logger.WriteLine(message, "TwitchPlugin");
 		}
