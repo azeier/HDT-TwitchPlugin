@@ -30,7 +30,7 @@ namespace TwitchPlugin
 
 		private void Button_ClickSave(object sender, RoutedEventArgs e)
 		{
-			Config.Instance.Channel = TexBoxChannel.Text;
+			Config.Instance.Channel = TexBoxChannel.Text.ToLower();
 			if(Config.Instance.Channel.Contains("/"))	 //user entered channel url instead of name
 				Config.Instance.Channel = new string(Config.Instance.Channel.Reverse().TakeWhile(c => c != '/').Reverse().ToArray());
 			Config.Instance.User = TextBoxUser.Text;
