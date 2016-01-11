@@ -18,14 +18,11 @@ namespace TwitchPlugin
 			Time = DateTime.Now;
 		}
 
-		public string User { get; private set; }
-		public string Channel { get; private set; }
-		public string Message { get; private set; }
-		public DateTime Time { get; private set; }
+		public string User { get; }
+		public string Channel { get; }
+		public string Message { get; }
+		public DateTime Time { get; }
 
-		public override string ToString()
-		{
-			return string.Format("<{0}>[{1}] {2}", Channel, User, Message);
-		}
+		public override string ToString() => $"<{Channel}>[{User}] {Message}";
 	}
 }

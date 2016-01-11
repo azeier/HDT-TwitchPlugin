@@ -33,10 +33,7 @@ namespace TwitchPlugin
 			_oauth = oauth;
 		}
 
-		public bool Connected
-		{
-			get { return _connection.Connected; }
-		}
+		public bool Connected => _connection.Connected;
 
 		public event ChatMsg OnChatMsg;
 
@@ -58,8 +55,7 @@ namespace TwitchPlugin
 				_reader = new StreamReader(_nwStream);
 				_writer = new StreamWriter(_nwStream);
 
-				var thread = new Thread(Listen);
-				thread.IsBackground = true;
+				var thread = new Thread(Listen) {IsBackground = true};
 				thread.Start();
 
 				_writer.AutoFlush = true;
@@ -79,25 +75,13 @@ namespace TwitchPlugin
 			return true;
 		}
 
-		public void JoinChannel(string channel)
-		{
-			SendData("JOIN", "#" + channel);
-		}
+		public void JoinChannel(string channel) => SendData("JOIN", "#" + channel);
 
-		public void LeaveChannel(string channel)
-		{
-			SendData("PART", "#" + channel);
-		}
+		public void LeaveChannel(string channel) => SendData("PART", "#" + channel);
 
-		public void Quit()
-		{
-			SendData("QUIT");
-		}
+		public void Quit() => SendData("QUIT");
 
-		public void SendMessage(string channel, string message)
-		{
-			SendData("PRIVMSG #" + channel, ":" + message);
-		}
+		public void SendMessage(string channel, string message) => SendData("PRIVMSG #" + channel, ":" + message);
 
 		private void Listen()
 		{
@@ -117,8 +101,7 @@ namespace TwitchPlugin
 						var msg = data.Split(':')[2];
 						var user = dataParts[0].Remove(0, 1).Split('!')[0];
 						var channel = dataParts[2].Remove(0, 1);
-						if(OnChatMsg != null)
-							OnChatMsg(new TwitchChatMessage(user, channel, msg));
+						OnChatMsg?.Invoke(new TwitchChatMessage(user, channel, msg));
 					}
 				}
 				catch(Exception e)
@@ -130,7 +113,7 @@ namespace TwitchPlugin
 
 		private void SendData(string cmd, string param = "", bool log = true)
 		{
-			string data = param == "" ? cmd : cmd + " " + param;
+			var data = param == "" ? cmd : cmd + " " + param;
 			_writer.WriteLine(data);
 			if(Config.Instance.IrcLogging && log)
 				Logger.WriteLine(data, "TwitchPlugin-IRC");

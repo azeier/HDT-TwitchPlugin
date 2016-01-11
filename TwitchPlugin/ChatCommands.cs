@@ -28,7 +28,7 @@ namespace TwitchPlugin
 			if(!decks.Any())
 				return;
 			var response =
-				decks.Select(d => string.Format("{0}:{1}", d.Name.Replace(" ", "_"), HssUrl + d.HearthStatsId)).Aggregate((c, n) => c + ", " + n);
+				decks.Select(d => $"{d.Name.Replace(" ", "_")}:{HssUrl + d.HearthStatsId}").Aggregate((c, n) => c + ", " + n);
 			Core.Send(response);
 		}
 
@@ -41,15 +41,9 @@ namespace TwitchPlugin
 				return;
 			}
 			if(deck.IsArenaDeck)
-			{
-				Core.Send(string.Format("Current arena run ({0}): {1}, DeckList: {2}", deck.Class, deck.WinLossString,
-				                        "[currently only supported for constructed decks]"));
-			}
+				Core.Send($"Current arena run ({deck.Class}): {deck.WinLossString}, DeckList: {"[currently only supported for constructed decks]"}");
 			else
-			{
-				Core.Send(string.Format("Currently using \"{0}\", Winrate: {1} ({2}), Decklist: {3}", deck.Name, deck.WinPercentString,
-				                        deck.WinLossString, HssUrl + deck.HearthStatsId));
-			}
+				Core.Send($"Currently using \"{deck.Name}\", Winrate: {deck.WinPercentString} ({deck.WinLossString}), Decklist: {HssUrl + deck.HearthStatsId}");
 		}
 
 		public static void StatsCommand(string arg)
@@ -64,14 +58,13 @@ namespace TwitchPlugin
 			var timeFrame = arg == "today" || arg == "total" ? arg : "this " + arg;
 			if(numGames == 0)
 			{
-				Core.Send(string.Format("No games played {0}.", timeFrame));
+				Core.Send($"No games played {timeFrame}.");
 				return;
 			}
 			var numDecks = games.Select(g => g.DeckId).Distinct().Count();
 			var wins = games.Count(g => g.Result == GameResult.Win);
 			var winRate = Math.Round(100.0 * wins / numGames);
-			Core.Send(string.Format("Played {0} games with {1} decks {2}. Total stats: {3}-{4} ({5}%)", numGames, numDecks, timeFrame, wins,
-			                        numGames - wins, winRate));
+			Core.Send($"Played {numGames} games with {numDecks} decks {timeFrame}. Total stats: {wins}-{numGames - wins} ({winRate}%)");
 		}
 
 		public static void ArenaCommand(string arg)
@@ -102,7 +95,7 @@ namespace TwitchPlugin
 			var timeFrame = arg == "today" || arg == "total" ? arg : "this " + arg;
 			if(!arenaRuns.Any())
 			{
-				Core.Send(string.Format("No arena runs {0}.", timeFrame));
+				Core.Send($"No arena runs {timeFrame}.");
 				return;
 			}
 			var ordered =
@@ -111,8 +104,8 @@ namespace TwitchPlugin
 			var best = ordered.Where(run => run.Wins == ordered.First().Wins).ToList();
 			var classesObj = best.Select(x => x.Run.Class).Distinct().Select(x => new {Class = x, Count = best.Count(c => c.Run.Class == x)});
 			var classes =
-				classesObj.Select(x => x.Class + (x.Count > 1 ? string.Format(" (x{0})", x.Count) : "")).Aggregate((c, n) => c + ", " + n);
-			Core.Send(string.Format("Best arena run {0}: {1} with {2}", timeFrame, best.First().Run.WinLossString, classes));
+				classesObj.Select(x => x.Class + (x.Count > 1 ? $" (x{x.Count})" : "")).Aggregate((c, n) => c + ", " + n);
+			Core.Send($"Best arena run {timeFrame}: {best.First().Run.WinLossString} with {classes}");
 		}
 
 		public static void BestDeckCommand(string arg)
@@ -141,14 +134,13 @@ namespace TwitchPlugin
 			if(best == null)
 			{
 				if(Config.Instance.BestDeckGamesThreshold > 1)
-					Core.Send(string.Format("Not enough games played {0} (min: {1})", timeFrame, Config.Instance.BestDeckGamesThreshold));
+					Core.Send($"Not enough games played {timeFrame} (min: {Config.Instance.BestDeckGamesThreshold})");
 				else
 					Core.Send("No games played " + timeFrame);
 				return;
 			}
 			var winRate = Math.Round(100.0 * best.Wins / (best.Wins + best.Losses), 0);
-			Core.Send(string.Format("Best deck {0}: \"{1}\", Winrate: {2}% ({3}-{4}), Decklist: {5}", timeFrame, best.DeckObj.Deck.Name, winRate,
-			                        best.Wins, best.Losses, HssUrl + best.DeckObj.Deck.HearthStatsId));
+			Core.Send($"Best deck {timeFrame}: \"{best.DeckObj.Deck.Name}\", Winrate: {winRate}% ({best.Wins}-{best.Losses}), Decklist: {HssUrl + best.DeckObj.Deck.HearthStatsId}");
 		}
 
 		public static void MostPlayedCommand(string arg)
@@ -171,8 +163,7 @@ namespace TwitchPlugin
 			var wins = mostPlayed.Games.Count(g => g.Result == GameResult.Win);
 			var losses = mostPlayed.Games.Count(g => g.Result == GameResult.Loss);
 			var winRate = Math.Round(100.0 * wins / (wins + losses), 0);
-			Core.Send(string.Format("Most played deck {0}: \"{1}\", Winrate: {2}% ({3}-{4}), Decklist: {5}", timeFrame, mostPlayed.Deck.Name,
-			                        winRate, wins, losses, HssUrl + mostPlayed.Deck.HearthStatsId));
+			Core.Send($"Most played deck {timeFrame}: \"{mostPlayed.Deck.Name}\", Winrate: {winRate}% ({wins}-{losses}), Decklist: {HssUrl + mostPlayed.Deck.HearthStatsId}");
 		}
 
 		public static Func<GameStats, bool> TimeFrameFilter(string timeFrame)
@@ -192,10 +183,7 @@ namespace TwitchPlugin
 			}
 		}
 
-		public static void HdtCommand()
-		{
-			Core.Send(string.Format("Hearthstone Deck Tracker: http://hsdecktracker.net"));
-		}
+		public static void HdtCommand() => Core.Send("Hearthstone Deck Tracker: http://hsdecktracker.net");
 
 		public static void OnGameEnd()
 		{
@@ -213,16 +201,16 @@ namespace TwitchPlugin
 			if(_lastGame == null)
 				return;
 			var winStreak = _winStreak > 2
-				                ? string.Format("{0}! {1} win in a row", GetKillingSpree(_winStreak), GetOrdinal(_winStreak))
-				                : _lastGame.Result.ToString();
+				                ? $"{GetKillingSpree(_winStreak)}! {GetOrdinal(_winStreak)} win in a row"
+								: _lastGame.Result.ToString();
 			var deck = DeckList.Instance.ActiveDeckVersion;
 			var winLossString = deck != null ? ": " + deck.WinLossString : "";
-            var message = string.Format("{0} vs {1} ({2}) after {3}{4}", winStreak, _lastGame.OpponentName, _lastGame.OpponentHero.ToLower(),
-			                            _lastGame.Duration, winLossString);
+            var message =
+	            $"{winStreak} vs {_lastGame.OpponentName} ({_lastGame.OpponentHero.ToLower()}) after {_lastGame.Duration}{winLossString}";
 			_lastGame = null;
 			if(Config.Instance.AutoPostDelay > 0)
 			{
-				Logger.WriteLine(string.Format("Waiting {0} seconds before posting game result...", Config.Instance.AutoPostDelay), "TwitchPlugin");
+				Logger.WriteLine($"Waiting {Config.Instance.AutoPostDelay} seconds before posting game result...", "TwitchPlugin");
 				await Task.Delay(Config.Instance.AutoPostDelay * 1000);
 			}
 			Core.Send(message);
@@ -259,9 +247,6 @@ namespace TwitchPlugin
 			}
 		}
 
-		public static void CommandsCommand()
-		{
-			Core.Send("List of available commands: https://github.com/Epix37/HDT-TwitchPlugin/wiki/Commands");
-		}
+		public static void CommandsCommand() => Core.Send("List of available commands: https://github.com/Epix37/HDT-TwitchPlugin/wiki/Commands");
 	}
 }

@@ -39,21 +39,11 @@ namespace TwitchPlugin
 			Close();
 		}
 
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
-			Process.Start(e.Uri.AbsoluteUri);
-		}
+		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Process.Start(e.Uri.AbsoluteUri);
 
-		private void Button_ClickInfo(object sender, RoutedEventArgs e)
-		{
-			FlyoutCommandsInfo.IsOpen = !FlyoutCommandsInfo.IsOpen;
-		}
+		private void Button_ClickInfo(object sender, RoutedEventArgs e) => FlyoutCommandsInfo.IsOpen = !FlyoutCommandsInfo.IsOpen;
 
-		private void TexBoxMinGames_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
-		{
-			var regex = new Regex("[^0-9]+");
-			e.Handled = regex.IsMatch(e.Text);
-		}
+		private void TexBoxMinGames_OnPreviewTextInput(object sender, TextCompositionEventArgs e) => e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
 
 		private void ButtonSetStatsFilePath_OnClick(object sender, RoutedEventArgs e)
 		{

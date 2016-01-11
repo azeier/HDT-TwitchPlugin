@@ -11,7 +11,7 @@ namespace TwitchPlugin
 	{
 		private static Config _instance;
 
-		public static string[] TimeFrames { get { return new[] {"today", "week", "season", "total"}; } }
+		public static string[] TimeFrames => new[] {"today", "week", "season", "total"};
 
 		public Config()
 		{
@@ -50,10 +50,7 @@ namespace TwitchPlugin
 			StatsFileDir = Hearthstone_Deck_Tracker.Config.Instance.DataDirPath;
 		}
 
-		public static Config Instance
-		{
-			get { return _instance ?? Load(); }
-		}
+		public static Config Instance => _instance ?? Load();
 
 		public string User { get; set; }
 		public string OAuth { get; set; }
@@ -92,30 +89,21 @@ namespace TwitchPlugin
 		public bool SaveStatsToFile { get; set; }
 		public string StatsFileDir { get; set; }
 		public string StatsFileName { get; set; }
-		public string StatsFileFullPath { get { return Path.Combine(StatsFileDir, StatsFileName); } }
+		public string StatsFileFullPath => Path.Combine(StatsFileDir, StatsFileName);
 		public bool IrcLogging { get; set; }
 
-		private static string FilePath
-		{
-			get { return Path.Combine(Hearthstone_Deck_Tracker.Config.Instance.ConfigDir, "TwitchPlugin.xml"); }
-		}
+		private static string FilePath => Path.Combine(Hearthstone_Deck_Tracker.Config.Instance.ConfigDir, "TwitchPlugin.xml");
 
 		public static T GetConfigItem<T>(string name)
 		{
-			object prop = Instance.GetType().GetProperty(name).GetValue(Instance, null);
+			var prop = Instance.GetType().GetProperty(name).GetValue(Instance, null);
 			if(prop == null)
 				return default(T);
 			return (T)prop;
 		}
 
-		public static void Save()
-		{
-			XmlManager<Config>.Save(FilePath, Instance);
-		}
+		public static void Save() => XmlManager<Config>.Save(FilePath, Instance);
 
-		private static Config Load()
-		{
-			return _instance = File.Exists(FilePath) ? XmlManager<Config>.Load(FilePath) : new Config();
-		}
+		private static Config Load() => _instance = File.Exists(FilePath) ? XmlManager<Config>.Load(FilePath) : new Config();
 	}
 }
