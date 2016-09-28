@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -15,18 +16,18 @@ namespace TwitchPlugin
 	{
 		public static async void Run(Version current)
 		{
-			Logger.WriteLine("Checking for updates...", "TwitchPlugin");
+			Log.Info("Checking for updates...", "TwitchPlugin");
 
 			const string versionXmlUrl = @"https://raw.githubusercontent.com/azeier/HDT-Data/master/Plugins/twitchplugin-version";
 			try
 			{
-				Logger.WriteLine("Current version: " + current, "TwitchPlugin");
+				Log.Info("Current version: " + current, "TwitchPlugin");
 				string xml;
 				using(var wc = new WebClient())
 					xml = await wc.DownloadStringTaskAsync(versionXmlUrl);
 
 				var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
-				Logger.WriteLine("Latest version: " + newVersion, "TwitchPlugin");
+				Log.Info("Latest version: " + newVersion, "TwitchPlugin");
 
 				if(newVersion > current)
 				{
@@ -42,7 +43,7 @@ namespace TwitchPlugin
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Error checking for new version.\n\n" + e, "TwitchPlugin");
+				Log.Error("Error checking for new version.\n\n" + e, "TwitchPlugin");
 			}
 		}
 	}

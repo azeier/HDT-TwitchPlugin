@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static TwitchPlugin.ChatCommands;
 
 #endregion
@@ -64,12 +65,12 @@ namespace TwitchPlugin
 			if(_irc == null)
 				return;
 			_irc.SendMessage(Config.Instance.Channel.ToLower(), message);
-			Logger.WriteLine(message, "TwitchPlugin");
+			Log.Info(message, "TwitchPlugin");
 		}
 
 		public static bool Connect()
 		{
-			Logger.WriteLine("Logging in as " + Config.Instance.User);
+			Log.Info("Logging in as " + Config.Instance.User);
 			_irc = new IRC(Config.Instance.User, Config.Instance.User, Config.Instance.OAuth);
 			if (!_irc.Connect("irc.twitch.tv", 6667))
 				return false;
@@ -88,7 +89,7 @@ namespace TwitchPlugin
 			if(Commands.TryGetValue(cmd, out chatCommand))
 				chatCommand.Execute(msg);
 			else
-				Logger.WriteLine($"Unknown command by {msg.User}: {msg.Message}", "TwitchPlugin");
+				Log.Info($"Unknown command by {msg.User}: {msg.Message}", "TwitchPlugin");
 		}
 
 		public static void Disconnect()
@@ -123,7 +124,7 @@ namespace TwitchPlugin
 			{
 				//uncomment for v0.11.5 ?
 				//Hearthstone_Deck_Tracker.API.Errors.ShowErrorMessage("TwitchPlugin", ex.ToString());
-				Logger.WriteLine("Error writing to stats file: " + ex, "TwitchPlugin");
+				Log.Error("Error writing to stats file: " + ex, "TwitchPlugin");
 			}
 		}
 	}
@@ -147,20 +148,20 @@ namespace TwitchPlugin
 
 		public void Execute(TwitchChatMessage msg)
 		{
-			Logger.WriteLine($"Command \"{_command}\" requested by {msg.User}.", "TwitchPlugin");
+			Log.Info($"Command \"{_command}\" requested by {msg.User}.", "TwitchPlugin");
 			if(_generalConfigItem != null && !Config.GetConfigItem<bool>(_generalConfigItem))
 			{
-				Logger.WriteLine($"Command \"{_command}\" is disabled (general).", "TwitchPlugin");
+				Log.Info($"Command \"{_command}\" is disabled (general).", "TwitchPlugin");
 				return;
 			}
 			if(!Config.GetConfigItem<bool>(_configItem))
 			{
-				Logger.WriteLine($"Command \"{_command}\" is disabled.", "TwitchPlugin");
+				Log.Info($"Command \"{_command}\" is disabled.", "TwitchPlugin");
 				return;
 			}
 			if((DateTime.Now - _lastExecute).TotalSeconds < 10)
 			{
-				Logger.WriteLine($"Time since last execute of {_command} is less than 10 seconds. Not executing.", "TwitchPlugin");
+				Log.Info($"Time since last execute of {_command} is less than 10 seconds. Not executing.", "TwitchPlugin");
 				return;
 			}
 			_lastExecute = DateTime.Now;

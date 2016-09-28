@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -53,7 +54,7 @@ namespace TwitchPlugin
 				Core.Send(string.Format(MissingTimeFrameMessage, "stats"));
 				return;
 			}
-			var games = DeckStatsList.Instance.DeckStats.SelectMany(ds => ds.Games).Where(TimeFrameFilter(arg)).ToList();
+			var games = DeckStatsList.Instance.DeckStats.SelectMany(ds => ds.Value.Games).Where(TimeFrameFilter(arg)).ToList();
 			var numGames = games.Count;
 			var timeFrame = arg == "today" || arg == "total" ? arg : "this " + arg;
 			if(numGames == 0)
@@ -210,7 +211,7 @@ namespace TwitchPlugin
 			_lastGame = null;
 			if(Config.Instance.AutoPostDelay > 0)
 			{
-				Logger.WriteLine($"Waiting {Config.Instance.AutoPostDelay} seconds before posting game result...", "TwitchPlugin");
+				Log.Info($"Waiting {Config.Instance.AutoPostDelay} seconds before posting game result...", "TwitchPlugin");
 				await Task.Delay(Config.Instance.AutoPostDelay * 1000);
 			}
 			Core.Send(message);

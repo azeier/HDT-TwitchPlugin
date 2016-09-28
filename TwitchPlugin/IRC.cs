@@ -5,6 +5,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using Hearthstone_Deck_Tracker;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -45,7 +46,7 @@ namespace TwitchPlugin
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error connecting: " + ex, "TwitchPlugin");
+				Log.Error("Error connecting: " + ex, "TwitchPlugin");
 				return false;
 			}
 
@@ -69,7 +70,7 @@ namespace TwitchPlugin
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Communication Error: " + ex, "TwitchPlugin");
+				Log.Error("Communication Error: " + ex, "TwitchPlugin");
 				return false;
 			}
 			return true;
@@ -106,7 +107,7 @@ namespace TwitchPlugin
 				}
 				catch(Exception e)
 				{
-					Logger.WriteLine(e.StackTrace);
+					Log.Error(e);
 				}
 			}
 		}
@@ -116,7 +117,7 @@ namespace TwitchPlugin
 			var data = param == "" ? cmd : cmd + " " + param;
 			_writer.WriteLine(data);
 			if(Config.Instance.IrcLogging && log)
-				Logger.WriteLine(data, "TwitchPlugin-IRC");
+				Log.Info(data, "TwitchPlugin-IRC");
 		}
 	}
 }
