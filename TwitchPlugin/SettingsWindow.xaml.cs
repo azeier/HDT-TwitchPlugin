@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -71,7 +72,7 @@ namespace TwitchPlugin
 			{
 				//uncomment for v0.11.5?
 				//Hearthstone_Deck_Tracker.API.Errors.ShowErrorMessage("TwitchPlugin", "Could not access selected path. Please choose another one. \n\n" + ex);
-				Logger.WriteLine("Could not access selected path: " + ex, "TwitchPlugin");
+				Log.Error("Could not access selected path: " + ex, "TwitchPlugin");
 			}
 		}
 	}

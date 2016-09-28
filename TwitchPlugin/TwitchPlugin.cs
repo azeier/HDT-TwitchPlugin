@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 
 #endregion
@@ -80,7 +81,7 @@ namespace TwitchPlugin
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine("Error connecting to irc: " + ex);
+					Log.Error("Error connecting to irc: " + ex);
 				}
 			};
 			disconnectMenuItem.Click += (sender, args) =>

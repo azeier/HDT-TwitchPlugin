@@ -47,7 +47,7 @@ namespace TwitchPlugin
 			ChatCommandMostPlayedTotal = true;
 			BestDeckGamesThreshold = 3;
 			StatsFileName = "hdt_activedeck_stats.txt";
-			StatsFileDir = Hearthstone_Deck_Tracker.Config.Instance.DataDirPath;
+			StatsFileDir = Hearthstone_Deck_Tracker.Config.Instance.DataDir;
 		}
 
 		public static Config Instance => _instance ?? Load();
