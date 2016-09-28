@@ -17,7 +17,7 @@ namespace TwitchPlugin
 		{
 			Logger.WriteLine("Checking for updates...", "TwitchPlugin");
 
-			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/Plugins/twitchplugin-version";
+			const string versionXmlUrl = @"https://raw.githubusercontent.com/azeier/HDT-Data/master/Plugins/twitchplugin-version";
 			try
 			{
 				Logger.WriteLine("Current version: " + current, "TwitchPlugin");
@@ -37,7 +37,7 @@ namespace TwitchPlugin
 						                                   MessageDialogStyle.AffirmativeAndNegative,
 						                                   new MetroDialogSettings {AffirmativeButtonText = "download", NegativeButtonText = "not now"});
 					if(result == MessageDialogResult.Affirmative)
-						Process.Start(@"https://github.com/Epix37/HDT-TwitchPlugin/releases");
+						Process.Start(@"https://github.com/azeier/HDT-TwitchPlugin/releases");
 				}
 			}
 			catch(Exception e)

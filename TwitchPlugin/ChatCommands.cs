@@ -247,6 +247,6 @@ namespace TwitchPlugin
 			}
 		}
 
-		public static void CommandsCommand() => Core.Send("List of available commands: https://github.com/Epix37/HDT-TwitchPlugin/wiki/Commands");
+		public static void CommandsCommand() => Core.Send("List of available commands: https://github.com/azeier/HDT-TwitchPlugin/wiki/Commands");
 	}
 }
