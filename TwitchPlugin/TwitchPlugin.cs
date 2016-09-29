@@ -38,7 +38,7 @@ namespace TwitchPlugin
 
 		public string Name => "TwitchPlugin";
 
-		public string Description => "Connects to Twitch IRC to post your decks, stats and more on command. For a detailed list of commands click the \"INFO\" button under settings.\n\nIf you have questions, suggestions or just want to talk feel free to email me: epikz37@gmail.com.";
+		public string Description => "Connects to Twitch IRC to post your decks, stats and more on command. For a detailed list of commands click the \"INFO\" button under settings.\n\nIf you have questions, suggestions or just want to talk feel free to email me: alex@hearthsim.net.";
 
 		public string ButtonText => "Settings";
 
