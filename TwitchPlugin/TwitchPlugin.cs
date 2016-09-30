@@ -44,7 +44,7 @@ namespace TwitchPlugin
 
 		public string Author => "Epix";
 
-		public Version Version => new Version(0, 5, 0, 0);
+		public Version Version => new Version(0, 6, 0, 0);
 
 		public MenuItem MenuItem { get; private set; }
 
